@@ -14,6 +14,7 @@ Steps:
 
 
 What is the aim of the research?
+
 Abstract
 
 Biological datasets, mainly those of neural tissue architecture or protein structures, are high-dimensional, noisy, and complex. Most computational methods and algorithms capture global trends or local details of the data, but not both. One such algorithm that only captures global trends is Topological Data Analysis (TDA). TDA extracts global features from point cloud data to reveal connected components such as loops, holes, lines, and voids through persistent homology. Additionally, TDA measures how these topological features appear and disappear as the radius increases, while being resistant to noise in our dataset. Despite this, TDA does not provide information about individual points or clusters in our dataset. In contrast, Density-Based Spatial Clustering of Applications with Noise (DBSCAN) provides more localized and individual information. DBSCAN incrementally expands a radius around each voxel (3-D point) in the dataset to form clusters according to set density thresholds. In doing so, DBSCAN records the distance at which each point forms a cluster, but does not offer insights about the overall dataset like TDA does.
