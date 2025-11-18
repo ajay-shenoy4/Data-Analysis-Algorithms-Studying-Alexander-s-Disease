@@ -1,21 +1,22 @@
 Steps:
-1) Run TDA on our data, TDA.R
-2) Run DBSCAN, dbscan_radii_newData_minPts.py on our data.
-3) Turn our dbscan data into bins, NEW_dbscan_to_bins.R
-4) Merge our TDA and DBSCAN data together, New_merge_tda_dbscan.R.
-5) Find the correlations between both datasets, correlations.R
-6) Graph our dbscan results, New_Atlas_Graphing.py
-7) Visualize the relations between our TDA and DBSCAN data through tests, NewTests.r.
+1) Run TDA on our data, TDA.R       The script loads a folder of TDA persistence CSV files (each containing Birth/Death times), bins all birth/death events into time intervals, aggregates them by subject and homology level (H0, H1, H2), and outputs one combined table.
+  
+2) Run DBSCAN, dbscan_radii_newData_minPts.py on our data.    This script processes a folder of 3D point-cloud CSV files and computes, for every point in every file, the smallest radius at which that point becomes a DBSCAN-style core point for a range of minPts values. For each dataset, the code loads the point coordinates, extracts metadata (sex, genotype, image ID, brain region, laterality, etc.) from the filename, and then increases a search radius from 0.001 up to 1.0 in small increments. At each radius, it uses scikit-learn’s NearestNeighbors to count how many neighbors each point has within that radius; if a point reaches at least minPts neighbors for the first time, its “core radius” is recorded. Once all points have assigned radii or the max radius is reached, the results (coordinates, metadata, minPts value, and computed radius) are saved as a new CSV file. This process is repeated for each input CSV and for every minPts value from 3 to 15. All per-file results are then concatenated into one large final dataset, which is written out so the full set of core radii across subjects and minPts thresholds can be analyzed together.
+  
+3) Turn our dbscan data into bins, NEW_dbscan_to_bins.R      This R code takes the combined core-radii CSV and organizes the data into bins of size 0.001 based on each point’s recorded_radius. It cleans the Subject column, then groups the data by Bin, Subject, minPts, and subregion, calculating for each bin the number of points and the average coordinates (x, y, z) and intensity (i). The resulting summarized table is sorted, saved as a new CSV, and a preview is printed.
 
+4) Merge our TDA and DBSCAN data together, New_merge_tda_dbscan.R.    This R code standardizes and merges TDA and DBSCAN datasets by parsing subject metadata, creating a complete grid of bins, subjects, and minPts, and filling missing DBSCAN entries with zeros. It then filters to keep only common rows, merges the datasets, resolves duplicated columns, and saves a clean, combined CSV for downstream analysis.
+  
+5) Find the correlations between both datasets, correlations.R        This R code calculates and visualizes correlations between DBSCAN/cluster metrics and TDA homology measures. For each minPts value and subject, it computes correlations between cluster counts or average coordinates (x, y, z, i) and TDA birth/death counts (H0–H2). The results are combined into a single CSV. It then reshapes the data to focus on cluster-related correlations and generates a faceted boxplot showing how these correlations vary across minPts values, saving the plot as a PNG.
 
-
-
-
-
+6) Graph our dbscan results, New_Atlas_Graphing.py        This Python code generates interactive 3D scatter plots of core points from DBSCAN results. For each CSV file in a folder, it bins points by recorded_radius and colors them using a discrete palette, with separate traces for each subregion. The x, y, and z coordinates of the points define the 3D positions, and a colorbar indicates the radius bins. Each plot is saved as an HTML file for interactive viewing, allowing exploration of spatial distributions of points across subregions and radius values.
+  
+7) Visualize the relations between our TDA and DBSCAN data through tests, NewTests.r and BonfPlots.R.    This script performs a systematic ANOVA analysis across multiple experimental conditions (minPts, subregion, Image) with post-hoc testing and visualization. It handles interactions, multiple comparisons, and creates publication-ready plots showing both effect sizes and statistical significance.
 
 What is the aim of the research?
 
 Abstract
 
 Biological datasets, mainly those of neural tissue architecture or protein structures, are high-dimensional, noisy, and complex. Most computational methods and algorithms capture global trends or local details of the data, but not both. One such algorithm that only captures global trends is Topological Data Analysis (TDA). TDA extracts global features from point cloud data to reveal connected components such as loops, holes, lines, and voids through persistent homology. Additionally, TDA measures how these topological features appear and disappear as the radius increases, while being resistant to noise in our dataset. Despite this, TDA does not provide information about individual points or clusters in our dataset. In contrast, Density-Based Spatial Clustering of Applications with Noise (DBSCAN) provides more localized and individual information. DBSCAN incrementally expands a radius around each voxel (3-D point) in the dataset to form clusters according to set density thresholds. In doing so, DBSCAN records the distance at which each point forms a cluster, but does not offer insights about the overall dataset like TDA does.
+
 An example of where these data modeling strategies could be applied is to Alexander’s Disease (AxD). AxD is a rare, progressive, and fatal neurodegenerative disease caused by mutations in the Glial Fibrillary Acidic Protein (GFAP) gene. These mutations cause Rosenthal fibers to accumulate in astrocytes, impairing the cell’s ability to regulate white matter, leading to demyelination, astrogliosis, and lesion formation. Using a neonatal-onset rat model of AxD, we can model changes in the brain’s white matter through NODDI imaging, measuring neurite density index (NDI) and orientation dispersion index (ODI) of individual voxels. By applying both TDA and DBSCAN on the NODDI imaging dataset, we can map features such as NDI, ODI, and clustering distance to topological features in the point cloud. By doing so, we are able to bridge the deficiencies of both DBSCAN and TDA, and combine global, structural features with precise, local information. With this approach, we gain new insights into biological systems such as protein folding and neural tissue architecture, and can identify new biomarkers and less invasive therapeutic strategies for diseases like AxD. 
