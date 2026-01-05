@@ -1,5 +1,9 @@
 # Data Analysis Algorithms: Studying Alexander's Disease
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Language: R](https://img.shields.io/badge/Language-R-blue.svg)](https://www.r-project.org/)
+[![Language: Python](https://img.shields.io/badge/Language-Python-green.svg)](https://www.python.org/)
+
 ## Research Aim & Abstract
 Biological datasets, particularly those of neural tissue architecture, are high-dimensional, noisy, and complex. This research aims to bridge the gap between **Global Trends** and **Local Details** by combining two distinct computational methods:
 
