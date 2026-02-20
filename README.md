@@ -19,8 +19,8 @@ Biological datasets, particularly those of neural tissue architecture, are high-
 The analysis follows a structured multi-step workflow from raw point clouds to statistical validation.
 
 ### Step 1: Feature Extraction
-* **`TDA.R`**: Processes folders of TDA persistence CSV files. It bins birth/death events into specific time intervals and aggregates them by subject and homology level ($H_0$, $H_1$, $H_2$) to output a combined topological table.
-* **`dbscan_radii_newData_minPts.py`**: A Python script that computes the "core radius" for every point in 3D point-cloud CSVs. It iterates through `minPts` values (3 to 15), using `scikit-learn`'s `NearestNeighbors` to find the exact radius where a point becomes a core point.
+* **`TDA.R`**: Processes folders of TDA persistence CSV files. It bins birth/death events into specific time intervals and aggregates them by subject and homology level ($H_0$, $H_1$, $H_2$) to output a combined topological table. Receives input files from AxD_Sigma_TDA_New
+* **`dbscan_radii_newData_minPts.py`**: A Python script that computes the "core radius" for every point in 3D point-cloud CSVs. It iterates through `minPts` values (3 to 15), using `scikit-learn`'s `NearestNeighbors` to find the exact radius where a point becomes a core point. Receives input files from Pointmaps_AxD_New. 
 
 ### Step 2: Data Transformation
 * **`NEW_dbscan_to_bins.R`**: Organizes the combined core-radii data into bins (size 0.001). It groups data by Subject, Bin, and subregion to calculate point density and average coordinates $(x, y, z)$ and intensity $(i)$.
@@ -32,6 +32,7 @@ The analysis follows a structured multi-step workflow from raw point clouds to s
 
 ### Step 4: Visualization
 * **`New_Atlas_Graphing.py`**: Generates interactive 3D scatter plots of core points. Points are binned by their recorded radius and colored by subregion, saved as HTML files for dynamic spatial exploration.
+* **`PointmapSelector.ipynb`**: A batch processing script that validates the biological "purity" of clusters. It maps 2D persistence bins back to 3D coordinates to determine if mathematical clusters correspond to specific anatomical subregions. It uses scikit-learn for neighbor lookups and processes minPts pairs in batches to optimize memory usage.
 
 ---
 
