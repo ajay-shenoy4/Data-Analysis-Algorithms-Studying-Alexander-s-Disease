@@ -28,7 +28,7 @@ The analysis follows a structured multi-step workflow from raw point clouds to s
 
 ### Step 3: Correlation & Statistical Analysis
 * **`correlations.R`**: Calculates correlations between DBSCAN cluster metrics and TDA homology measures. It produces a CSV of results and a faceted boxplot showing how these correlations fluctuate across different `minPts` values.
-* **`NewTests.r` & `BonfPlots.R`**: Performs systematic ANOVA analysis across experimental conditions (minPts, subregion, Image). It handles post-hoc testing with Bonferroni corrections to generate publication-ready significance plots.
+* ** `BonfPlots.R`**: Performs systematic ANOVA analysis across experimental conditions (minPts, subregion, Image). It handles post-hoc testing with Bonferroni corrections to generate publication-ready significance plots.
 
 ### Step 4: Visualization
 * **`New_Atlas_Graphing.py`**: Generates interactive 3D scatter plots of core points. Points are binned by their recorded radius and colored by subregion, saved as HTML files for dynamic spatial exploration.
