@@ -33,6 +33,7 @@ The analysis follows a structured multi-step workflow from raw point clouds to s
 ### Step 4: Visualization
 * **`New_Atlas_Graphing.py`**: Generates interactive 3D scatter plots of core points. Points are binned by their recorded radius and colored by subregion, saved as HTML files for dynamic spatial exploration.
 * **`PointmapSelector.ipynb`**: A batch processing script that validates the biological "purity" of clusters. It maps 2D persistence bins back to 3D coordinates to determine if mathematical clusters correspond to specific anatomical subregions. It uses scikit-learn for neighbor lookups and processes minPts pairs in batches to optimize memory usage.
+* **`ClusterStatsVisual.R`**: A R script that visualizes clustering data into heatmaps. Maps the persistence bins of minPts combinations and visualizes how often clusters fall into each subregion. 
 
 ---
 
@@ -48,6 +49,8 @@ The analysis follows a structured multi-step workflow from raw point clouds to s
 3.  Run `New_merge_tda_dbscan.R` to create the final analysis table.
 4.  Execute `correlations.R` and `NewTests.r` for results.
 5.  Use `New_Atlas_Graphing.py` for 3D visualization.
+6.  Use `PointmapSelector.ipynb` for 2D and 3D visualization.
+7.  Use `ClusterStatsVisual.R` for 2D visualization. 
 
 ## Abstract
 
